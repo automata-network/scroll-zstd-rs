@@ -223,7 +223,7 @@ fn compile_zstd() {
     enable_threading(&mut config);
 
     // Compile!
-    config.compile("libzstd.a");
+    config.compile("libzstd-scroll.a");
 
     let src = env::current_dir().unwrap().join("zstd").join("lib");
     let dst = PathBuf::from(env::var_os("OUT_DIR").unwrap());
