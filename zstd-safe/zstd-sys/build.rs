@@ -214,9 +214,7 @@ fn compile_zstd() {
      * 7+: events at every position (*very* verbose)
      */
     #[cfg(feature = "debug")]
-    if !is_wasm {
-        config.define("DEBUGLEVEL", Some("5"));
-    }
+    config.define("DEBUGLEVEL", Some("6"));
 
     set_pthread(&mut config);
     set_legacy(&mut config);
