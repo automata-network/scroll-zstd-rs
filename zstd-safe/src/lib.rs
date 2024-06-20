@@ -24,6 +24,14 @@
 #[cfg(feature = "std")]
 extern crate std;
 
+#[cfg(feature = "tstd")]
+#[macro_use]
+extern crate sgxlib as std;
+
+#[cfg(any(feature = "std", feature = "tstd"))]
+use std::prelude::v1::*;
+
+
 #[cfg(test)]
 mod tests;
 
@@ -35,7 +43,7 @@ pub use zstd_sys::ZSTD_strategy as Strategy;
 
 /// Reset directive.
 // pub use zstd_sys::ZSTD_ResetDirective as ResetDirective;
-use core::ffi::{c_char, c_int, c_ulonglong, c_void};
+use std::os::raw::{c_char, c_int, c_ulonglong, c_void};
 
 use core::marker::PhantomData;
 use core::num::{NonZeroU32, NonZeroU64};
@@ -821,7 +829,7 @@ unsafe impl<'a> Send for CCtx<'a> {}
 // CCtx can't be shared across threads, so it does not implement Sync.
 
 unsafe fn c_char_to_str(text: *const c_char) -> &'static str {
-    core::ffi::CStr::from_ptr(text)
+    std::ffi::CStr::from_ptr(text)
         .to_str()
         .expect("bad error message from zstd")
 }
@@ -1494,7 +1502,7 @@ pub unsafe trait WriteBuf {
     }
 }
 
-#[cfg(feature = "std")]
+#[cfg(any(feature = "std", feature = "tstd"))]
 #[cfg_attr(feature = "doc-cfg", doc(cfg(feature = "std")))]
 unsafe impl<T> WriteBuf for std::io::Cursor<T>
 where
@@ -1572,7 +1580,7 @@ unsafe impl<'a> WriteBuf for &'a mut std::vec::Vec<u8> {
     }
 }
 
-#[cfg(feature = "std")]
+#[cfg(any(feature = "std", feature = "tstd"))]
 #[cfg_attr(feature = "doc-cfg", doc(cfg(feature = "std")))]
 unsafe impl WriteBuf for std::vec::Vec<u8> {
     fn as_slice(&self) -> &[u8] {

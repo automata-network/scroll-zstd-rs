@@ -1,3 +1,5 @@
+use std::prelude::v1::*;
+
 use super::{compress, decompress};
 
 const TEXT: &str = include_str!("../../assets/example.txt");

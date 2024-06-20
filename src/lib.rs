@@ -21,6 +21,12 @@
 #![deny(missing_docs)]
 #![cfg_attr(feature = "doc-cfg", feature(doc_cfg))]
 
+#![cfg_attr(not(feature = "std"), no_std)]
+#[cfg(feature = "tstd")]
+extern crate sgxlib as std;
+
+use std::prelude::v1::*;
+
 // Re-export the zstd-safe crate.
 pub use zstd_safe;
 

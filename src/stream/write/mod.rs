@@ -1,4 +1,6 @@
 //! Implement push-based [`Write`] trait for both compressing and decompressing.
+use std::prelude::v1::*;
+
 use std::io::{self, Write};
 
 use zstd_safe;

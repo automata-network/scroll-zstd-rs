@@ -40,7 +40,7 @@ fn generate_bindings(defs: Vec<&str>, headerpaths: Vec<PathBuf>) {
 fn generate_bindings(_: Vec<&str>, _: Vec<PathBuf>) {}
 
 fn pkg_config() -> (Vec<&'static str>, Vec<PathBuf>) {
-    let library = pkg_config::Config::new()
+    let library = pkg_config_dev::Config::new()
         .statik(true)
         .cargo_metadata(!cfg!(feature = "non-cargo"))
         .probe("libzstd")

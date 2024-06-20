@@ -11,7 +11,7 @@ version = "0.13.0"
 exclude = ["assets/*.zst", "/.github"]
 readme = "Readme.md"
 edition = "2018"
-rust-version = "1.64"
+#rust-version = "1.64"
 
 [package.metadata.docs.rs]
 features = ["experimental", "zstdmt", "zdict_builder", "doc-cfg"]
@@ -20,17 +20,20 @@ features = ["experimental", "zstdmt", "zdict_builder", "doc-cfg"]
 travis-ci = { repository = "gyscos/zstd-rs" }
 
 [dependencies]
-zstd-safe = { path = "zstd-safe", version = "7.0.0", default-features = false, features = ["std"] }
+zstd-safe = { path = "zstd-safe", version = "7.0.0", default-features = false }
+sgxlib = { git = "https://github.com/automata-network/sgxlib", default-features = false }
 
 [dev-dependencies]
-clap = {version = "4.0", features=["derive"]}
+#clap = {version = "4.0", features=["derive"]}
 humansize = "2.0"
 partial-io = "0.5"
 walkdir = "2.2"
 
 [features]
-default = ["legacy", "arrays", "zdict_builder"]
+default = ["std"]
 
+std = ["zstd-safe/std", "legacy", "arrays", "zdict_builder"]
+tstd = ["zstd-safe/tstd", "legacy", "arrays", "zdict_builder", "sgxlib/tstd"]
 bindgen = ["zstd-safe/bindgen"]
 debug = ["zstd-safe/debug"]
 legacy = ["zstd-safe/legacy"]
@@ -52,3 +55,20 @@ thin-lto = ["zstd-safe/thin-lto"]
 [[example]]
 name = "train"
 required-features = ["zdict_builder"]
+
+[patch.'https://github.com/apache/teaclave-sgx-sdk.git']
+sgx_alloc = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", tag = "v1.1.4" }
+sgx_backtrace_sys = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", tag = "v1.1.4" }
+sgx_build_helper = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", tag = "v1.1.4" }
+sgx_demangle = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", tag = "v1.1.4" }
+sgx_libc = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", tag = "v1.1.4" }
+sgx_rand = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", tag = "v1.1.4" }
+sgx_tcrypto = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", tag = "v1.1.4" }
+sgx_ucrypto = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", tag = "v1.1.4" }
+sgx_tkey_exchange = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", tag = "v1.1.4" }
+sgx_tprotected_fs = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", tag = "v1.1.4" }
+sgx_trts = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", tag = "v1.1.4" }
+sgx_tstd = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", tag = "v1.1.4" }
+sgx_types = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", tag = "v1.1.4" }
+sgx_unwind = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", tag = "v1.1.4" }
+sgx_urts = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", tag = "v1.1.4" }

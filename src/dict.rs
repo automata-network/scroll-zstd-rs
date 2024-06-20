@@ -13,6 +13,7 @@
 //!
 //! [`Encoder::with_dictionary`]: ../struct.Encoder.html#method.with_dictionary
 //! [`Decoder::with_dictionary`]: ../struct.Decoder.html#method.with_dictionary
+use std::prelude::v1::*;
 
 #[cfg(feature = "zdict_builder")]
 use std::io::{self, Read};

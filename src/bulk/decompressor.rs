@@ -1,3 +1,5 @@
+use std::prelude::v1::*;
+
 use crate::map_error_code;
 
 #[cfg(feature = "experimental")]

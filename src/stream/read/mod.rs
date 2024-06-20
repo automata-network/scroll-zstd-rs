@@ -1,4 +1,6 @@
 //! Implement pull-based [`Read`] trait for both compressing and decompressing.
+use std::prelude::v1::*;
+
 use std::io::{self, BufRead, BufReader, Read};
 
 use crate::dict::{DecoderDictionary, EncoderDictionary};

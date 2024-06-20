@@ -18,7 +18,7 @@ readme = "Readme.md"
 repository = "https://github.com/gyscos/zstd-rs"
 version = "2.0.9+zstd.1.5.5"
 edition = "2018"
-rust-version = "1.64"
+
 
 # Use include instead of exclude, as a (temporary)
 # workaround for https://github.com/rust-lang/cargo/issues/9555
@@ -51,16 +51,20 @@ doctest = false  # Documentation is for C code, good luck testing that.
 
 [build-dependencies.bindgen]
 optional = true
-version = "0.69"
+version = "0.65"
 default-features = false
 features = ["runtime", "which-rustfmt"]
 
-[build-dependencies.pkg-config]
+[build-dependencies.pkg-config-dev]
 version = "0.3"
+package = "pkg-config"
 
 [build-dependencies.cc]
-version = "1.0.45"
-features = ["parallel"]
+version = "<1.0.95"
+
+[dependencies.sgxlib]
+git = "https://github.com/automata-network/sgxlib"
+default-features = false
 
 [features]
 default = ["legacy", "zdict_builder"]
@@ -71,6 +75,7 @@ legacy = [] # Enable legacy ZSTD support (for versions < zstd-0.8)
 non-cargo = [] # Silence cargo-specific build flags
 pkg-config = [] # Use pkg-config to build the zstd C library.
 std = [] # Deprecated: we never use types from std.
+tstd = ["sgxlib/tstd"]
 zstdmt = [] # Enable multi-thread support (with pthread)
 thin = [] # Optimize binary by size
 no_asm = [] # Disable ASM files (only on amd64 for decompression)
@@ -81,3 +86,21 @@ no_wasm_shim = [] # Disable wasm shims (in case your wasm toolchain includes a C
 # Will only work if `clang` is used to build the C library.
 fat-lto = [] # Enable fat-lto, will override thin-lto if specified
 thin-lto = [] # Enable thin-lto, will fallback to fat-lto if not supported
+
+
+[patch.'https://github.com/apache/teaclave-sgx-sdk.git']
+sgx_alloc = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", tag = "v1.1.4" }
+sgx_backtrace_sys = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", tag = "v1.1.4" }
+sgx_build_helper = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", tag = "v1.1.4" }
+sgx_demangle = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", tag = "v1.1.4" }
+sgx_libc = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", tag = "v1.1.4" }
+sgx_rand = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", tag = "v1.1.4" }
+sgx_tcrypto = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", tag = "v1.1.4" }
+sgx_ucrypto = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", tag = "v1.1.4" }
+sgx_tkey_exchange = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", tag = "v1.1.4" }
+sgx_tprotected_fs = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", tag = "v1.1.4" }
+sgx_trts = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", tag = "v1.1.4" }
+sgx_tstd = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", tag = "v1.1.4" }
+sgx_types = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", tag = "v1.1.4" }
+sgx_unwind = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", tag = "v1.1.4" }
+sgx_urts = { git = "https://github.com/automata-network/incubator-teaclave-sgx-sdk", tag = "v1.1.4" }

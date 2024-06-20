@@ -1,6 +1,6 @@
 #!/bin/sh
 
-RUST_TARGET=1.64
+RUST_TARGET=1.0
 bindgen="bindgen --no-layout-tests --blocklist-type=max_align_t --rustified-enum=.* --use-core --rust-target $RUST_TARGET"
 experimental="-DZSTD_STATIC_LINKING_ONLY -DZDICT_STATIC_LINKING_ONLY -DZSTD_RUST_BINDINGS_EXPERIMENTAL"
 
@@ -12,8 +12,10 @@ It is released under the same BSD license.
 
 $(cat zstd/LICENSE)
 */"
+    echo "#[allow(unused_imports)]"
+    echo "use std::prelude::v1::*;"
 
-    $bindgen $@
+    $bindgen $@ | sed 's/::std::/std::/g'
 }
 
     for EXPERIMENTAL_ARG in "$experimental" ""; do
