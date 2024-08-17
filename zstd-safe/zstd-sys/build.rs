@@ -98,6 +98,7 @@ fn compile_zstd() {
         "zstd/lib/dictBuilder",
         #[cfg(feature = "legacy")]
         "zstd/lib/legacy",
+        "patch",
     ] {
         let mut entries: Vec<_> = fs::read_dir(dir)
             .unwrap()

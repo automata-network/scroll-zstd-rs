@@ -30,6 +30,14 @@ include!("bindings_zdict.rs");
 #[cfg(all(feature = "experimental", not(feature = "bindgen")))]
 include!("bindings_zstd_experimental.rs");
 
+// patch
+#[cfg(all(feature = "experimental", not(feature = "bindgen")))]
+extern "C" {
+    pub fn ZSTD_createCCtx_advanced_v2(
+        customMem: ZSTD_customMem,
+    ) -> *mut ZSTD_CCtx;
+}
+
 #[cfg(all(
     feature = "experimental",
     feature = "zdict_builder",

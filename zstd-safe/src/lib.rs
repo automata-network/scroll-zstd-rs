@@ -227,8 +227,9 @@ impl<'a> CCtx<'a> {
     /// Returns `None` if zstd returns a NULL pointer - may happen if allocation fails.
     pub fn try_create() -> Option<Self> {
         // Safety: Just FFI
+        let custom_mem = zstd_sys::ZSTD_customMem { customAlloc: None, customFree: None, opaque: std::ptr::null_mut() };
         Some(CCtx(
-            NonNull::new(unsafe { zstd_sys::ZSTD_createCCtx() })?,
+            NonNull::new(unsafe { zstd_sys::ZSTD_createCCtx_advanced_v2(custom_mem) })?,
             PhantomData,
         ))
     }
